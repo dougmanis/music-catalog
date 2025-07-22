@@ -28,7 +28,7 @@ A simple CRUD backend API for managing a catalog of music gear — built with No
    Ensure `.env` contains:
 
    ```env
-   DATABASE_URL="file:./dev.db"
+   DATABASE_URL="file:./prisma/dev.db"
    ```
 
 4. Run database migrations:
