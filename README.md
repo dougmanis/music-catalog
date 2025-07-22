@@ -43,6 +43,8 @@ A simple CRUD backend API for managing a catalog of music gear — built with No
    node prisma/seed.js
    ```
 
+   Note: the seed.js script merges its contents into the existing data entries. It does not overwrite or reset your data.
+
 6. Start the server:
 
    ```bash
