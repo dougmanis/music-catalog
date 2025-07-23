@@ -11,3 +11,4 @@ dev.db-journal
 .vscode/
 .idea/
 *.log
+coverage/

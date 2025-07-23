@@ -2,21 +2,29 @@
   "name": "music-catalog",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "dev": "nodemon index.js",
-    "seed": "node prisma/seed.js",
-    "test": "echo \"Error: no tests defined yet\" && exit 1"
-    },
+ "scripts": {
+  "dev": "nodemon index.js",
+  "seed": "node prisma/seed.js",
+  "test": "cross-env NODE_ENV=test jest --runInBand",
+  "test:watch": "cross-env NODE_ENV=test jest --watch",
+  "test:coverage": "cross-env NODE_ENV=test jest --coverage",
+  "db:push:test": "dotenv -e .env.test -- npx prisma db push"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "@prisma/client": "^6.12.0",
+    "dotenv": "^17.2.0",
     "express": "^5.1.0",
     "prisma": "^6.12.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "cross-env": "^7.0.3",
+    "dotenv-cli": "^9.0.0",
+    "jest": "^30.0.5",
+    "nodemon": "^3.1.10",
+    "supertest": "^7.1.4"
   }
 }
