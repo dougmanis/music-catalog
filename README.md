@@ -34,7 +34,7 @@ A simple CRUD backend API for managing a catalog of music gear — built with No
 4. Run database migrations:
 
    ```bash
-   npx prisma migrate dev --name init
+   npx prisma migrate dev
    ```
 
 5. Seed initial test data:
@@ -72,6 +72,39 @@ A simple CRUD backend API for managing a catalog of music gear — built with No
 - **Restore:** Replace `dev.db` with your backup copy.
 - Alternatively, keep your seed data script updated for quick resets.
 
+## Running Tests
+
+Tests are written with Jest and target the API endpoints directly.
+
+To set up a clean test environment:
+
+1. Create the test database:
+
+   ```bash
+   npm run db:push:test
+
+2. Run the tests:
+
+   ```bash
+   npm test
+
+3. Optional: View test coverage:
+
+   ```bash
+   npm run test:coverage
+   open coverage/lcov-report/index.html  # on macOS
+
+## Useful npm scripts
+
+| Script              | Purpose                                  |
+|---------------------|------------------------------------------|
+| `npm run dev`       | Run the Express server with nodemon      |
+| `npm run seed`      | Seed the dev database                    |
+| `npm test`          | Run the Jest test suite                  |
+| `npm run test:watch`| Run tests in watch mode                  |
+| `npm run test:coverage` | Generate code coverage report       |
+| `npm run db:push:test`  | Sync schema to test.db for tests    |
+
 ---
 
 ## License
@@ -82,4 +115,4 @@ MIT License
 
 ## Contact
 
-Your Name — <dougmanis@example.com>
+Doug Manis — <dougmanis@example.com>

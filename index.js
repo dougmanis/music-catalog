@@ -1,77 +1,79 @@
 const express = require('express');
-const { PrismaClient } = require('@prisma/client');
-
 const app = express();
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// GET all gear items
-app.get('/gear', async (req, res) => {
-  try {
-    const items = await prisma.gearItem.findMany();
-    res.json(items);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to retrieve gear items.' });
-  }
-});
-
-// GET a single gear item by ID
-app.get('/gear/:id', async (req, res) => {
-  const id = parseInt(req.params.id);
-  try {
-    const item = await prisma.gearItem.findUnique({ where: { id } });
-    item ? res.json(item) : res.status(404).json({ error: 'Item not found.' });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to retrieve gear item.' });
-  }
-});
-
-// POST a new gear item
+// Create a new gear item
 app.post('/gear', async (req, res) => {
-  const { name, type, brand, description, price } = req.body;
+  const { name, type, brand, model, year, price, description } = req.body;
   try {
-    const item = await prisma.gearItem.create({
-      data: { name, type, brand, description, price },
+    const gearItem = await prisma.gearItem.create({
+      data: { name, type, brand, model, year, price, description },
     });
-    res.status(201).json(item);
+    res.status(201).json(gearItem);
   } catch (error) {
-    res.status(400).json({ error: 'Failed to create gear item.' });
+    res.status(400).json({ error: 'Invalid input' });
   }
 });
 
-// PUT update an existing gear item
-app.put('/gear/:id', async (req, res) => {
-  const id = parseInt(req.params.id);
-  const { name, type, brand, description, price } = req.body;
+// Get all gear items
+app.get('/gear', async (req, res) => {
+  const items = await prisma.gearItem.findMany();
+  res.json(items);
+});
+
+// Get a single gear item
+app.get('/gear/:id', async (req, res) => {
+  const id = parseInt(req.params.id, 10);
   try {
-    const item = await prisma.gearItem.update({
-      where: { id },
-      data: { name, type, brand, description, price },
+    const item = await prisma.gearItem.findUnique({
+      where: { id }
     });
+    if (!item) throw new Error();
     res.json(item);
-  } catch (error) {
-    res.status(400).json({ error: 'Failed to update gear item.' });
+  } catch {
+    res.status(404).json({ error: 'Item not found' });
   }
 });
 
-// DELETE a gear item
-app.delete('/gear/:id', async (req, res) => {
-  const id = parseInt(req.params.id);
+// Update a gear item
+app.put('/gear/:id', async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const data = req.body;
   try {
-    await prisma.gearItem.delete({ where: { id } });
-    res.status(204).send();
+    const updatedItem = await prisma.gearItem.update({
+      where: { id },
+      data
+    });
+    res.json(updatedItem);
   } catch (error) {
-    res.status(400).json({ error: 'Failed to delete gear item.' });
+    res.status(404).json({ error: 'Item not found or update failed' });
   }
 });
 
-// Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`API server listening at http://localhost:${PORT}`);
+// Delete a gear item
+app.delete('/gear/:id', async (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  try {
+    await prisma.gearItem.delete({
+      where: { id }
+    });
+    res.json({ message: 'Item deleted successfully' });
+  } catch (error) {
+    res.status(404).json({ error: 'Item not found or delete failed' });
+  }
 });
 
-// Routes 
-const gearRoutes = require('./routes/gear');
-app.use('/api/gear', gearRoutes);
+// Only listen if not in test mode
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
+
+// Export app for testing
+module.exports = app;

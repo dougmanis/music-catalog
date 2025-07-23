@@ -12,6 +12,8 @@ model GearItem {
   name        String
   type        String
   brand       String
+  model       String?
+  year        Int?
   description String?
   price       Float
   createdAt   DateTime @default(now())
