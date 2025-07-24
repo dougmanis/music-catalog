@@ -1,0 +1,39 @@
+openapi: 3.0.0
+info:
+  title: Music Catalog API
+  version: 1.0.0
+  description: API documentation for the Music Equipment Catalog project
+
+paths: {} # Will be populated by swagger-jsdoc from route comments
+
+components:
+  schemas:
+    GearItemInput:
+      type: object
+      required:
+        - name
+        - type
+        - brand
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        brand:
+          type: string
+        model:
+          type: string
+        year:
+          type: integer
+        price:
+          type: number
+        description:
+          type: string
+
+    GearItem:
+      allOf:
+        - $ref: '#/components/schemas/GearItemInput'
+        - type: object
+          properties:
+            id:
+              type: integer

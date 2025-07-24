@@ -4,6 +4,22 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 // GET all gear items
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Get all music gear items
+ *     tags: [Gear]
+ *     responses:
+ *       200:
+ *         description: A list of all gear items
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/GearItem'
+ */
 router.get('/', async (req, res) => {
   const items = await prisma.gearItem.findMany();
   res.json(items);
@@ -17,6 +33,28 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST new item
+/**
+ * @swagger
+ * /gear:
+ *   post:
+ *     summary: Create a new gear item
+ *     tags: [Gear]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/GearItemInput'
+ *     responses:
+ *       201:
+ *         description: Gear item created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GearItem'
+ *       400:
+ *         description: Invalid input
+ */
 router.post('/', async (req, res) => {
   const newItem = await prisma.gearItem.create({ data: req.body });
   res.status(201).json(newItem);
