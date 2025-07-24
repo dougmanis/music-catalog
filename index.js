@@ -1,11 +1,24 @@
 const express = require('express');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJSDoc = require('swagger-jsdoc');
 const app = express();
+app.use(express.json());
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
+// Swagger docs 
+const fs = require('fs');
+const yaml = require('js-yaml');
+const swaggerDocument = yaml.load(fs.readFileSync('./docs/swagger/index.yaml', 'utf8'));
+const swaggerOptions = {
+  definition: swaggerDocument,
+  apis: ['./routes/*.js'], // ✅ Only this needed now
+};
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+
 
 // Create a new gear item
 app.post('/gear', async (req, res) => {
