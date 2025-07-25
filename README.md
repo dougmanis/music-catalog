@@ -129,6 +129,38 @@ This export is handled manually or in CI. It is **not written at runtime** by `i
 
 3. UI rendering (Swagger UI or Redoc) can be hosted from this folder using GitHub Pages.
 
+## Generating Static API Docs for GitHub Pages
+
+To generate static HTML documentation for publishing:
+
+### Swagger UI
+
+```bash
+./scripts/update-swagger-ui.sh
+```
+
+This exports the OpenAPI spec and updates Swagger UI in `docs/api/`. You can then push your changes to GitHub to publish.
+
+Visit:
+```
+https://<your-username>.github.io/<your-repo>/api/
+```
+
+### ReDoc
+
+```bash
+./scripts/publish-redoc.sh
+```
+
+This generates a minimal Redoc HTML file using the exported Swagger spec and places it in `docs/api-redoc/`.
+
+Visit:
+```
+https://<your-username>.github.io/<your-repo>/api-redoc/
+```
+
+Both can be maintained independently and used as alternate views.
+
 ## Useful npm scripts
 
 | Script              | Purpose                                  |
