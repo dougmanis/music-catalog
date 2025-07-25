@@ -94,6 +94,41 @@ To set up a clean test environment:
    npm run test:coverage
    open coverage/lcov-report/index.html  # on macOS
 
+## Swagger API Documentation Export
+
+This project uses Swagger to generate and publish API reference documentation.
+
+### Exporting the OpenAPI Spec
+
+Swagger docs are generated from JSDoc comments in `./routes/*.js` and metadata in `./docs/swagger/index.yaml`.
+
+To export the OpenAPI spec for publishing (e.g., GitHub Pages):
+
+```bash
+npm run export:swagger
+```
+
+This will write the spec to:
+
+```
+./docs/api/swagger-output.json
+```
+
+### Note
+
+This export is handled manually or in CI. It is **not written at runtime** by `index.js` to avoid infinite rebuild loops.
+
+### Setup Recap
+
+1. Swagger config is located in:
+   - `index.yaml` — base OpenAPI definition
+   - `routes/` — annotated route handlers
+
+2. Output lives in:
+   - `docs/api/swagger-output.json`
+
+3. UI rendering (Swagger UI or Redoc) can be hosted from this folder using GitHub Pages.
+
 ## Useful npm scripts
 
 | Script              | Purpose                                  |
