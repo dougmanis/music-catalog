@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 // GET all gear items
 /**
  * @swagger
- * /:
+ * /gear:
  *   get:
  *     summary: Get all music gear items
  *     tags: [Gear]
