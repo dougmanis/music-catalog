@@ -14,3 +14,4 @@ dev.db-journal
 .idea/
 *.log
 coverage/
+prisma/prisma/test.db

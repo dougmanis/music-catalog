@@ -129,11 +129,11 @@ This export is handled manually or in CI. It is **not written at runtime** by `i
 
 3. UI rendering (Swagger UI or Redoc) can be hosted from this folder using GitHub Pages.
 
-## Generating Static API Docs for GitHub Pages
+### Generating Static API Docs for GitHub Pages
 
 To generate static HTML documentation for publishing:
 
-### Swagger UI
+#### Swagger UI
 
 ```bash
 ./scripts/update-swagger-ui.sh
@@ -146,7 +146,7 @@ Visit:
 https://<your-username>.github.io/<your-repo>/api/
 ```
 
-### ReDoc
+#### ReDoc
 
 ```bash
 ./scripts/publish-redoc.sh
