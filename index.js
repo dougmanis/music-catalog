@@ -13,11 +13,10 @@ const yaml = require('js-yaml');
 const swaggerDocument = yaml.load(fs.readFileSync('./docs/swagger/index.yaml', 'utf8'));
 const swaggerOptions = {
   definition: swaggerDocument,
-  apis: ['./routes/*.js'], // ✅ Only this needed now
+  apis: ['./routes/*.js'], // Scan route files for JSDoc
 };
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
 
 
 // Create a new gear item

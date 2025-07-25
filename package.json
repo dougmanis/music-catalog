@@ -8,7 +8,8 @@
     "test": "cross-env NODE_ENV=test jest --runInBand",
     "test:watch": "cross-env NODE_ENV=test jest --watch",
     "test:coverage": "cross-env NODE_ENV=test jest --coverage",
-    "db:push:test": "dotenv -e .env.test -- npx prisma db push"
+    "db:push:test": "dotenv -e .env.test -- npx prisma db push",
+    "export:swagger": "node scripts/export-swagger.js"
   },
   "keywords": [],
   "author": "",
