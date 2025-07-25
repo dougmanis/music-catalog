@@ -9,7 +9,8 @@
     "test:watch": "cross-env NODE_ENV=test jest --watch",
     "test:coverage": "cross-env NODE_ENV=test jest --coverage",
     "db:push:test": "dotenv -e .env.test -- npx prisma db push",
-    "export:swagger": "node scripts/export-swagger.js"
+    "export:swagger": "node scripts/export-swagger.js",
+    "db:sync": "npx prisma migrate dev"
   },
   "keywords": [],
   "author": "",
